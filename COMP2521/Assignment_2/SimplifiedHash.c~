@@ -1,0 +1,18 @@
+// Implementation of a Simplified Hash Table ADT
+
+#include <assert.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "Hash.h"
+#include "List.h"
+
+typedef struct HashTabRep {
+	int   nElements;    // # total elements in array
+	int   nItems;       // # current items stored in HashTable
+    char  *name;        // The string name of each element
+} HashTabRep;
+
+

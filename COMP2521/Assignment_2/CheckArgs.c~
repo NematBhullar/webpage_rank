@@ -1,0 +1,103 @@
+#include <assert.h>
+#include <ctype.h>
+#include <math.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAXSTRINGS 1000
+#define MAXCHAR 50
+#define MAXPAGES 50
+
+char searchTerms[MAXPAGES][MAXCHAR];
+char storeURLs[MAXSTRINGS][MAXCHAR];
+char storeLines[MAXSTRINGS][MAXCHAR];
+int frequency[MAXSTRINGS] = {0};
+
+int main(int argc, char *argv[]) {
+    for (int arg = 1; arg < argc; arg++) {
+        strcpy(searchTerms[arg - 1], argv[arg]);
+    }
+    int numTerms = argc - 1;
+    
+    for (int i = 0; i < numTerms; i++) {
+        printf("%s\n", searchTerms[i]);
+    }
+    
+
+    FILE *invertedIndex = fopen("invertedIndex.txt", "r");
+    
+    char bufferLine[MAXSTRINGS];
+    // Scan the .txt file
+    while (fscanf(invertedIndex, "%s", bufferLine) == 1) {
+        // Scan the array
+        for (int i = 0; i < numTerms; i++) {
+            if (strcmp(searchTerms[i], bufferLine) == 0) {
+                fgets(storeLines[i], MAXSTRINGS, invertedIndex);
+                
+                FILE *pagerankList = fopen("pagerankList.txt", "r");
+    
+                char bufferURL[MAXSTRINGS];
+                int outDegree;
+                double value;
+                
+                // Scan the .txt file
+                while (fscanf(pagerankList, "%s", searchTerms[i]) == 1) {
+                    char *ptr = strchr(bufferURL, ",");
+                    *ptr = '\0';
+                    
+                    printf("-----%s-----\n", bufferURL);
+                    if (strcmp(URL, bufferURL) == 0) {
+                        fscanf(pagerankList, "%d", &outDegree);  // outDegree
+                        fscanf(pagerankList, "%lf", &value);  // weighted pagerank
+                    }
+                }
+                
+                
+                fclose(pagerankList);
+                
+            }
+        }
+    }
+    
+    int numRefs = 0;
+    for (int i = 0; i < numTerms; i++) {
+        char *bufferURL = strtok(storeLines[i], " ");
+        while (strcmp(bufferURL, "\n") != 0) {
+            strcpy(storeURLs[numRefs], bufferURL);
+            printf("%s\n", bufferURL);
+            bufferURL = strtok(NULL, " ");
+            numRefs++;
+        }
+    }
+    
+    fclose(invertedIndex);
+   
+    
+    
+    for (int i = 0; i < numRefs; i++) {
+        for (int j = 0; j <= numRefs; j++) {
+            if (strcmp(storeURLs[i], storeURLs[j]) == 0 && storeURLs[j] != 0) {
+                frequency[i]++;
+            }
+        }
+    }
+    
+    for (int i = 0; i < numRefs; i++) {
+        printf("%s appears %d times\n", storeURLs[i], frequency[i]);
+    }
+    
+    
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+

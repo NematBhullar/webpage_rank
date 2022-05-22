@@ -1,0 +1,28 @@
+// Interface to the Hash Table ADT
+
+#ifndef HASH_H
+#define HASH_H
+
+#include "Item.h"
+
+typedef struct HashTabRep *HashTabRep
+
+// Creates a new empty hash table with N slots
+HashTable HashTableNew(int N);
+
+
+// Frees all memory associated with the given hash table
+void HashTableFree(HashTable ht);
+
+
+// Inserts a new item into a hash table
+void HashTableInsert(HashTable ht, Item it)
+
+
+// Deletes an item with the given key from a hash table
+void HashTableDelete(HashTable ht, Key k)
+
+Item *HashTableSearch(HashTable ht, Key k);
+
+
+#endif

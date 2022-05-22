@@ -1,0 +1,14 @@
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char *string = NULL;
+    int integer;
+    double doub;
+    printf("Enter a string, an integer and a double: ");
+    scanf("%s", string);
+    scanf("%d", &integer);
+    scanf("%lf", &doub);
+    printf("%s, %d, %lf\n", string, integer, doub);
+    return 0;
+}
